@@ -97,6 +97,7 @@ After loading, `toolbar_interop.js` provides a mechanism to register, refresh, a
 > ```js
 > {
 >   listener: ViewListener,
+>   is_refreshing: Boolean,
 >   clients: Array<String>,
 > }
 > ```
