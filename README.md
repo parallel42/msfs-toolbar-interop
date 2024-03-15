@@ -3,7 +3,7 @@
 ## Overview
 This project was created to facilitate interoperability on View Listeners between projects running in the MSFS Toolbar. Its primary goal is to make it easier for add-on developers to run JavaScript code, which is crucial for the functionality of their add-ons. This requires an in-game panel to function.
 
-## Solution Overview
+## Why?
 In Microsoft Flight Simulator (MSFS) 2020, addon developers face a significant challenge due to the lack of a dedicated space for running JavaScript, with the only conventional option being within aircraft instruments. This limitation complicates the development of generalized utility addons that rely on JavaScript to operate. The toolbar, always available during gameplay, presents an ideal but underutilized location for JavaScript execution. Traditionally, adding JavaScript to the toolbar involves overriding the Toolbar's HTML and/or JS files, a method that allows only one mod to function at a time (the last one loaded) thereby limiting compatibility between addons. This project introduces an innovative approach to inject JavaScript into the toolbar, overcoming the limitations of traditional methods and enabling multiple mods to use the Toolbar simultaneously.
 
 ## Key Features
