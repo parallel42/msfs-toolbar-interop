@@ -66,8 +66,9 @@ function load_js(path, callback) {
 }
 ```
 ```js
-load_js("/pages/ToolBar/toolbar_interop.js", () => {
-  // module loaded
+load_js("/pages/ToolBar/toolbar_interop.js");
+document.addEventListener('toolbar_interop_ready', () => {
+    // Interop is ready, time to register some View Listeners!
 });
 ```
 
