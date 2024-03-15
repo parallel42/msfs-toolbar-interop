@@ -145,5 +145,8 @@ class ToolBarInterop {
 
 }
 
-if(!window.toolbar_interop)
+
+if(!window.toolbar_interop) {
 	window.toolbar_interop = new ToolBarInterop();
+	document.dispatchEvent(new Event('toolbar_interop_ready'));
+}
