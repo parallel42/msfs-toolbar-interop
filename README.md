@@ -39,7 +39,7 @@ This code dynamically loads a JavaScript file (your_script.js) when the SVG icon
 ## Part 2: Ensuring View Listener Interoperability
 For addons using View Listeners, integrating toolbar_interop.js is essential for managing listener instances and ensuring all mods can access necessary data without conflicts.
 
-1. Include `toolbar_interop.js` in your project. You will find it and its folder structure in this Github repository.
+1. Include `toolbar_interop.js` in your project. You will find it and its folder structure in this Github repository. Please keep the same structure (html_ui/pages/ToolBar/toolbar_interop.js)
 2. Load the script at the beginning of your main JS file using the provided loader function to avoid conflicts and ensure proper initialization. Use the callback to continue your code initialization.
 ```js
 function load_js(path, callback) {
