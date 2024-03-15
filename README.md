@@ -66,9 +66,16 @@ function load_js(path, callback) {
 }
 ```
 ```js
-load_js("/pages/ToolBar/toolbar_interop.js");
-document.addEventListener('toolbar_interop_ready', () => {
-    // Interop is ready, time to register some View Listeners!
+load_js("/pages/ToolBar/toolbar_interop.js", () => {
+  if(window.toolbar_interop) {
+    // Interop already exists.
+    // Now we can register view listeners.
+  } else {
+    // Interop isn't loaded yet, let's wait for the ready event.
+    document.addEventListener('toolbar_interop_ready', () => {
+      // Now we can register view listeners.
+    });
+  }
 });
 ```
 
