@@ -1,4 +1,3 @@
-
 class ToolBarInterop {
 
 	constructor() {
@@ -41,6 +40,7 @@ class ToolBarInterop {
 		if(!listener) {
 			listener = {
 				view_listener: null,
+				is_refreshing: false,
 				clients: [],
 			};
 			this.registered_listeners[name] = listener;
@@ -87,6 +87,9 @@ class ToolBarInterop {
 		// If no listener exists, return
 		if(!listener) return;
 
+		if(listener.is_refreshing) return;
+		listener.is_refreshing = true;
+
 		// Copy m_handlers from the old listener
 		const m_handlers = [...listener.view_listener.m_handlers];
 
@@ -105,6 +108,7 @@ class ToolBarInterop {
 			});
 
 			// Return the listener and the name of existing clients
+			listener.is_refreshing = false;
 			if(callback) callback(this.get_listener(name));
 		})
 
@@ -144,7 +148,6 @@ class ToolBarInterop {
 	}
 
 }
-
 
 if(!window.toolbar_interop) {
 	window.toolbar_interop = new ToolBarInterop();
