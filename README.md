@@ -46,7 +46,6 @@ function load_js(path, callback) {
   // Create script element
   var module = document.createElement('script');
   module.src = path;
-		module.async = false;
 
   // Check if already exists
   if (document.head.querySelector('script[src="' + path + '"]')) {
