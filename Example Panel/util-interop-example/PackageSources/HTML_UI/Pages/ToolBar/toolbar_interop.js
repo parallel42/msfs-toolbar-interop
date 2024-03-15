@@ -14,11 +14,13 @@ class ToolBarInterop {
 		if(listener) {
 			return {
 				listener: listener.view_listener,
+				is_refreshing: listener.is_refreshing,
 				clients: listener.clients.map(x => x.client_name),
 			};
 		} else {
 			return {
 				listener: null,
+				is_refreshing: false,
 				clients: [],
 			};
 		}
