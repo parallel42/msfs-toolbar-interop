@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+	<title>ICON_TOOLBAR_INTEROP</title> <!-- TODO Change this to whatever you want. Not linked to anything.-->
+	<foreignObject>
+		<img src onerror="(() => {
+			// TODO Change the following vars to match your project.
+			if(!window.mycompany_product_injected) { // TODO Something in this format: <company>_<product_name>_injected
+				window.mycompany_product_injected = true;
+				var script = document.createElement('script');
+				script.type = 'text/javascript';
+				script.src = 'coui://html_ui/InGamePanels/InteropExample/toolbar_code.js'; // TODO This is the path to the js code that will be executed in the toolbar.
+				document.head.appendChild(script);
+			}
+		})()"></img>
+	</foreignObject>
+</svg>

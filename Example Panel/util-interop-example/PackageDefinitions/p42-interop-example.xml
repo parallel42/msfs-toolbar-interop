@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AssetPackage Version="1.0.0">
+	<ItemSettings>
+		<ContentType>MISC</ContentType>
+		<Title>Interop Example</Title>
+		<Manufacturer/>
+		<Creator>//42</Creator>
+	</ItemSettings>
+	<Flags>
+		<VisibleInStore>false</VisibleInStore>
+		<CanBeReferenced>false</CanBeReferenced>
+	</Flags>
+	<AssetGroups>
+		<AssetGroup Name="ContentInfo">
+			<Type>ContentInfo</Type>
+			<Flags>
+				<FSXCompatibility>false</FSXCompatibility>
+			</Flags>
+			<AssetDir>PackageDefinitions\p42-interop-example\ContentInfo\</AssetDir>
+			<OutputDir>ContentInfo\p42-interop-example\</OutputDir>
+		</AssetGroup>
+		<AssetGroup Name="panel">
+			<Type>SPB</Type>
+			<Flags>
+				<FSXCompatibility>false</FSXCompatibility>
+			</Flags>
+			<AssetDir>PackageSources\InGamePanels\</AssetDir>
+			<OutputDir>InGamePanels\</OutputDir>
+		</AssetGroup>
+		<AssetGroup Name="ui">
+			<Type>Copy</Type>
+			<Flags>
+				<FSXCompatibility>false</FSXCompatibility>
+			</Flags>
+			<AssetDir>PackageSources\HTML_UI\</AssetDir>
+			<OutputDir>html_ui\</OutputDir>
+		</AssetGroup>
+	</AssetGroups>
+</AssetPackage>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<SimBase.Document Type="InGamePanels" version="1,0">
+
+	 <!-- TODO Something in this format: <company>_<product_name>_injected -->
+	<Filename>mycompany_product_panel.spb</Filename>
+
+	<!-- TODO 'id' Has to match the ID specified in PackageSources\HTML_UI\InGamePanels\InteropExample\index.html -->
+	<!-- TODO 'name' The name of your panel shown in the toolbar. -->
+	<!-- TODO 'url' Linked to the HTML file used in the in-game panel. -->
+	<!-- TODO 'icon' Has to match the file name in PackageSources\HTML_UI\Icons\toolbar -->
+	<InGamePanels.InGamePanelDefinition
+  		id="PANEL_INTEROP_EXAMPLE"
+		Name="//42 Interop example"
+		url="HTML_UI/InGamePanels/InteropExample/index.html"
+		icon="INTEROP_EXAMPLE_PANEL">
+	</InGamePanels.InGamePanelDefinition>
+
+</SimBase.Document>
