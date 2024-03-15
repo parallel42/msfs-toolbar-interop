@@ -1,18 +1,20 @@
 # MSFS Toolbar Interop
 
-## Summary
-This project was created to facilitate interoperability on View Listeners between projects running in the MSFS Toolbar. This requires an in-game panel to function.
+## Overview
+This project was created to facilitate interoperability on View Listeners between projects running in the MSFS Toolbar. Its primary goal is to make it easier for add-on developers to run JavaScript code, which is crucial for the functionality of their add-ons. This requires an in-game panel to function.
 
-## Why?
-In MSFS 2020, there is no dedicated area to run javascript other than in an aircraft instrument. This makes it very dificult for add-on developers that need to execute javascript for their add-on to work properly. The area where it would make the most sense to execute javascript is the Toolbar area. Since it is loaded at all time, it makes it a prime location for javascript code injection.
+## Solution Overview
+In Microsoft Flight Simulator (MSFS) 2020, addon developers face a significant challenge due to the lack of a dedicated space for running JavaScript, with the only conventional option being within aircraft instruments. This limitation complicates the development of generalized utility addons that rely on JavaScript to operate. The toolbar, always available during gameplay, presents an ideal but underutilized location for JavaScript execution. Traditionally, adding JavaScript to the toolbar involves overriding the Toolbar's HTML and/or JS files, a method that allows only one mod to function at a time (the last one loaded) thereby limiting compatibility between addons. This project introduces an innovative approach to inject JavaScript into the toolbar, overcoming the limitations of traditional methods and enabling multiple mods to use the Toolbar simultaneously.
 
-There aren't many ways to inject in the toolbar. The expected way would be to create a package that overrides the Toolbar.html/.js files. The problem with this technique is that only one mod can override the toolbar at a time, meaning that all mods will stop working except the last one loaded. This project brings a new way to load js code in the toolbar.
+## Key Features
+- **JavaScript Code Injection:** A new method to inject JavaScript into the MSFS Toolbar, bypassing the limitations of traditional methods.  
+- **View Listener Interoperability:** Allows multiple add-ons to share and manage View Listeners efficiently, preventing conflicts and ensuring smooth operation.
 
-## The Concept
-Panel icons are loaded directly in the toolbar as `<svg>` elements instead of being rendered in a `<img>` element. This enables us to use `<foreignObject>` inside of the SVG to inject code. Here we're using an `<img>` element with an empty src to trigger an error that enables us to execute code. We use this opportunity to load our real js document containing all the logic for our app.
+## Part 1: SVG Icon Code Injection
+In order to run JavaScript code in the toolbar, your addon needs to have an in-game panel available in the toolbar. Since your code runs in the toolbar, it is possible to manually hide the icon from the toolbar if it isn't needed.
 
-### SVG icon code injection
-Opening the svg icon from your in-game panel (PackageSources\html_ui\icons\toolbar) in a text editor enables you to modify it to look like the code below and enable the injection.
+ 1. Locate your SVG icon within your package source: `PackageSources\html_ui\icons\toolbar`.
+ 2. Edit the SVG icon file using a text editor to include the injection mechanism as demonstrated below:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" id="Titre" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
@@ -25,16 +27,20 @@ Opening the svg icon from your in-game panel (PackageSources\html_ui\icons\toolb
         window.p42_example_injected = true;
         var script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'coui://html_ui/InGamePanels/P42Flow/toolbar_content/flow_toolbar.js';
+        script.src = 'coui://html_ui/InGamePanels/P42Example/toolbar_content/your_script.js';
         document.head.appendChild(script);
       }
     })()"></img>
   </foreignObject>
 </svg>
 ```
+This code dynamically loads a JavaScript file (your_script.js) when the SVG icon triggers an error due to its empty src attribute, leveraging the onerror event.
 
-### View Listener interoperability
-Next, if you are using any View Listeners, you need to add ``toolbar_interop.js`` to your project and load it. This module enables the interoperability of View Listeners, all of wich can only be registered once. ``toolbar_interop.js`` creates a central repository of View Listeners where they are registered once and everyone can use safely. You can make the following code part of your js document, just make sure it is loaded first. Optionally, use the callback in ``load_js`` to know when the module is loaded and proceed with the execution of your module. We don't recommend integrating the content of ``toolbar_interop.js`` directly in your code as it might conflict with other modules if an update is made. For interoperability reasons, we ask that you don't modify this file. Please raise an issue if you encounter a problem you if you would like functionality added.
+## Part 2: Ensuring View Listener Interoperability
+For addons using View Listeners, integrating toolbar_interop.js is essential for managing listener instances and ensuring all mods can access necessary data without conflicts.
+
+1. Include `toolbar_interop.js` in your project.
+2. Load the script at the beginning of your main JS file using the provided loader function to avoid conflicts and ensure proper initialization. Use the callback to continue your code initialization.
 ```js
 function load_js(path, callback) {
   // Create script element
@@ -58,41 +64,42 @@ function load_js(path, callback) {
   }
 }
 ```
-
 ```js
 load_js("/pages/ToolBar/toolbar_interop.js", () => {
   // module loaded
 });
 ```
 
-### How to use ``toolbar_interop.js``
-When loaded, it creates a class at ``window.toolbar_interop``. You can use this class to register new View Listeners, refresh them (re-register) and unregister them. The class will manage a single instance of the View Listeners for everyone to use. Doing it this way, we ensure everyone has the data they need.
+## Using toolbar_interop.js
+After loading, `toolbar_interop.js` provides a mechanism to register, refresh, and unregister View Listeners effectively, managing a centralized repository for all listeners.
 
-#### Registering an View Listener
-Make sure to add the name of your project as a 2nd argument. This enables other mods to get a list of all modules using the same listener.
-```js
-const listener = window.toolbar_interop.register('JS_LISTENER_WEATHER', 'SimFX', (listener) => {
-  // Listener was registered. "listener" is equivalent to the return of get_listener
-});
-```
+#### - Registering an View Listener
+> Make sure to add the name of your project as a 2nd argument. This enables other mods to get a list of all modules using the same listener.
+> ```js
+> const listener = window.toolbar_interop.register('JS_LISTENER_WEATHER', 'SimFX', (listener) => {
+>   // Listener was registered. "listener" is equivalent to the return of get_listener
+> });
+> ```
 
-#### Get a Listener
-This will return the requested listener with the list of other modules using the same listener.
-```js
-const listener = window.toolbar_interop.get_listener('JS_LISTENER_WEATHER');
-```
-```js
-{
-  listener: ViewListener,
-  clients: Array<String>,
-}
-```
+#### - Get a Listener
+> This will return the requested listener with the list of other modules using the same listener.
+> ```js
+> const listener = window.toolbar_interop.get_listener('JS_LISTENER_WEATHER');
+> ```
+> ```js
+> {
+>   listener: ViewListener,
+>   clients: Array<String>,
+> }
+> ```
 
-#### Refresh Listener
-In some situation (like the JS_LISTENER_WEATHER listener), some data is transmited right after the Listener is registered without a way to request that data again. Refreshing a Listener allows us to get that up-to-date data.
-```js
-const listener = window.toolbar_interop.refresh('JS_LISTENER_WEATHER', (listener) => {
-  // Listener was refreshed. "listener" is equivalent to the return of get_listener 
-});
-```
+#### - Refresh Listener
+> In some situation (like the `JS_LISTENER_WEATHER` listener), some data is transmited right after the Listener is registered without a way to request that data again. Refreshing a Listener allows us to get that up-to-date data.
+> ```js
+> const listener = window.toolbar_interop.refresh('JS_LISTENER_WEATHER', (listener) => {
+>   // Listener was refreshed. "listener" is equivalent to the return of get_listener 
+> });
+> ```
 
+## Conclusion
+By following these guidelines, you can leveraging the toolbar for JavaScript execution while ensuring smooth interoperability between multiple addons through shared View Listeners.
