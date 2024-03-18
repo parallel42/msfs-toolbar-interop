@@ -103,7 +103,7 @@ After loading, `toolbar_interop.js` provides a mechanism to register, refresh, a
 > ```
 
 #### - Refresh Listener
-> In some situation (like the `JS_LISTENER_WEATHER` listener), some data is transmited right after the Listener is registered without a way to request that data again. Refreshing a Listener allows us to get that up-to-date data.
+> With some listeners like `JS_LISTENER_WEATHER`, some data is transmited right after the Listener is registered without a way to request that data again. Refreshing a Listener allows us to get that up-to-date data.
 > ```js
 > const listener = window.toolbar_interop.refresh('JS_LISTENER_WEATHER', (listener) => {
 >   // Listener was refreshed. "listener" is equivalent to the return of get_listener 
