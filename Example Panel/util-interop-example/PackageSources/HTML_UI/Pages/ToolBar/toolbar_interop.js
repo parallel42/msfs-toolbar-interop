@@ -116,7 +116,6 @@ class ToolBarInterop {
 			if(callback) callback(this.get_listener(name));
 		});
 
-		return listener.view_listener;
 	}
 
 	/**
