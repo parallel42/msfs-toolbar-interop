@@ -99,8 +99,10 @@ class ToolBarInterop {
 		if(listener.view_listener)
 			listener.view_listener.unregister();
 
-		// Register the listener
-		listener.view_listener = RegisterViewListener(name, () => {
+		window.requestAnimationFrame(() => {
+			// Register the listener
+			listener.view_listener = RegisterViewListener(name, () => {})
+
 			// Restore m_handlers
 			listener.view_listener.m_handlers = m_handlers;
 
@@ -112,7 +114,7 @@ class ToolBarInterop {
 			// Return the listener and the name of existing clients
 			listener.is_refreshing = false;
 			if(callback) callback(this.get_listener(name));
-		})
+		});
 
 		return listener.view_listener;
 	}
