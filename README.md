@@ -37,7 +37,7 @@ In order to run JavaScript code in the toolbar, your addon needs to have an in-g
 This code dynamically loads a JavaScript file (``your_script.js``) when the SVG icon triggers an error due to its empty src attribute, leveraging the onerror event.
 
 ## Part 2: Ensuring View Listener Interoperability
-For addons using View Listeners, integrating toolbar_interop.js is essential for managing listener instances and ensuring all mods can access necessary data without conflicts.
+For addons using View Listeners in the toolbar, integrating toolbar_interop.js is essential for managing listener instances and ensuring all mods can access necessary data without conflicts.
 
 1. Include `toolbar_interop.js` in your project. You will find it and its folder structure in this Github repository under "Example Panel". Please keep the same structure (``PackageSources/html_ui/pages/ToolBar/toolbar_interop.js``).
 2. Load the script at the beginning of your main JS file using the provided loader function to avoid conflicts and ensure proper initialization. Use the callback to continue your code initialization.
