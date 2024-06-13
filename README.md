@@ -11,7 +11,7 @@ In Microsoft Flight Simulator (MSFS) 2020, addon developers face a significant c
 - **View Listener Interoperability:** Allows multiple add-ons to share and manage View Listeners efficiently, preventing conflicts and ensuring smooth operation.
 
 ## Part 1: SVG Icon Code Injection
-In order to run JavaScript code in the toolbar, your addon needs to have an in-game panel available in the toolbar. Since your code runs in the toolbar, it is possible to manually hide the icon from the toolbar if it isn't needed.
+In order to run JavaScript code in the toolbar, your addon needs to have an in-game panel available in the toolbar. Since your code runs in the toolbar, it is possible to manually hide the icon from the toolbar if it isn't needed. The following code assumes that you already have an in-game panel. If not, an example is provided in this repo.
 
  1. Locate your SVG icon within your package source: `PackageSources\html_ui\icons\toolbar`.
  2. Edit the SVG icon file using a text editor to include the injection mechanism as demonstrated below:
