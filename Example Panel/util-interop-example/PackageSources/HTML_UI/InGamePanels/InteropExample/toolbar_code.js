@@ -30,12 +30,26 @@
 	// Example of what you can do with the toolbar interop.
 	function initialize() {
 
-		// Find the Toolbar
-		const toolbar = document.querySelector('tool-bar');
 
-		// (Optional) Find the button for the panel and hide it.
-		const toolbar_button = toolbar.querySelector('toolbar-button[panel-id="PANEL_INTEROP_EXAMPLE"]');
-		toolbar_button.style.display = 'none';
+		// Find the Toolbar (MSFS 2024)
+		let toolbar = document.querySelector('ui-panel');
+
+		if(toolbar) {
+
+			// TODO (Optional) Find the button for the panel and hide it. Make sure to change the URL to match your icon
+			const toolbar_button = toolbar.querySelector('ui-resource-element[icon="coui://html_ui/vfs/html_ui/icons/toolbar/INTEROP_EXAMPLE_PANEL.svg"]');
+			toolbar_button.style.display = 'none';
+
+		} else {
+
+			// Find the Toolbar (MSFS 2020)
+			toolbar = document.querySelector('tool-bar');
+
+			// TODO (Optional) Find the button for the panel and hide it.
+			const toolbar_button = toolbar.querySelector('toolbar-button[panel-id="PANEL_INTEROP_EXAMPLE"]');
+			toolbar_button.style.display = 'none';
+
+		}
 
 
 		// TODO Change InteropExample for the name of your project.
