@@ -4,10 +4,10 @@
 This project was created to facilitate interoperability on View Listeners between projects running in the MSFS Toolbar. Its primary goal is to make it easier for add-on developers to run JavaScript code in the toolbar, which can be crucial for the functionality of their add-ons. This requires at least an in-game panel to function.
 
 ## Why?
-In Microsoft Flight Simulator (MSFS) 2020, addon developers face a significant challenge due to the lack of a dedicated space for running JavaScript, with the only conventional option being within aircraft instruments. This limitation complicates the development of generalized utility addons that rely on JavaScript to operate. The toolbar, always available during gameplay, presents an ideal but underutilized location for JavaScript execution. Traditionally, adding JavaScript to the toolbar involves overriding the Toolbar's HTML and/or JS files, a method that allows only one mod to function at a time (the last one loaded) thereby limiting compatibility between addons. This project introduces an innovative approach to inject JavaScript into the toolbar, overcoming the limitations of traditional methods and enabling multiple mods to use the Toolbar simultaneously.
+In Microsoft Flight Simulator (MSFS) 2020/2024, addon developers face a significant challenge due to the lack of a dedicated space for running JavaScript, with the only conventional option being within aircraft instruments. This limitation complicates the development of generalized utility addons that rely on JavaScript to operate. The toolbar, always available during gameplay, presents an ideal but underutilized location for JavaScript execution. Traditionally, adding JavaScript to the toolbar involves overriding the Toolbar's HTML and/or JS files, a method that allows only one mod to function at a time (the last one loaded) thereby limiting compatibility between addons. This project introduces an innovative approach to inject JavaScript into the toolbar, overcoming the limitations of traditional methods and enabling multiple mods to use the Toolbar simultaneously.
 
 ## Key Features
-- **JavaScript Code Injection:** A new method to inject JavaScript into the MSFS Toolbar, bypassing the limitations of traditional methods.  
+- **JavaScript Code Injection:** A new method to inject JavaScript into the MSFS Toolbar, bypassing the limitations of traditional methods.
 - **View Listener Interoperability:** Allows multiple add-ons to share and manage View Listeners efficiently, preventing conflicts and ensuring smooth operation.
 
 ## Part 1: SVG Icon Code Injection
@@ -18,9 +18,9 @@ In order to run JavaScript code in the toolbar, your addon needs to have an in-g
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" id="Titre" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
-  
+
   <!-- Content of your SVG file like <path>, <g>, etc. -->
-    
+
   <foreignObject>
     <img src onerror="(() => {
       if(!window.p42_example_injected) {
@@ -106,7 +106,7 @@ After loading, `toolbar_interop.js` provides a mechanism to register, refresh, a
 > With some listeners like `JS_LISTENER_WEATHER`, some data is transmited right after the Listener is registered without a way to request that data again. Refreshing the Listener allows us to get that up-to-date data.
 > ```js
 > window.toolbar_interop.refresh('JS_LISTENER_WEATHER', (listener) => {
->   // Listener was refreshed. "listener" is equivalent to the return of get_listener 
+>   // Listener was refreshed. "listener" is equivalent to the return of get_listener
 > });
 > ```
 
